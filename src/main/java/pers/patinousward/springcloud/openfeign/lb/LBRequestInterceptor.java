@@ -3,6 +3,8 @@ package pers.patinousward.springcloud.openfeign.lb;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import feign.Target;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +20,8 @@ import java.util.stream.Collectors;
  */
 public class LBRequestInterceptor {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(LBRequestInterceptor.class);
+
     @Bean
     public RequestInterceptor getRequestInterceptor(DiscoveryClient discoveryClient, LBRule[] lbRules) {
         Map<Class, LBRule> collect = Arrays.stream(lbRules).collect(Collectors.toMap(LBRule::getType, f -> f));
@@ -29,7 +33,7 @@ public class LBRequestInterceptor {
                 if (lbRule != null) {
                     List<ServiceInstance> instances = discoveryClient.getInstances(lbRule.getApplicationName());
                     String newTarget = lbRule.rule(instances, requestTemplate);
-                    System.out.println(String.format("IRule ==> %s", newTarget));
+                    LOGGER.info("IRule ==> {}", newTarget);
                     requestTemplate.target(newTarget);
                 }
             }
