@@ -1,7 +1,7 @@
 package pers.patinousward.springcloud.openfeign.lb;
 
 /**
- * @Author jianfeng.tang
+ * @Author patinousward
  * @create 2021/4/30 下午4:30
  */
 public class CustomerOpenFeignLBException extends RuntimeException {
