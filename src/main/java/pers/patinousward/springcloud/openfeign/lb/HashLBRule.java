@@ -22,6 +22,11 @@ public class HashLBRule<T> extends AbstractLBRule<T> {
 
     private final String key;
 
+    /**
+     *
+     * @param type feignclient 的类
+     * @param key 需要用来hash的key，会自动从解析get请求和json类型的post请求，其他类型略..
+     */
     public HashLBRule(Class<T> type, String key) {
         super(type);
         this.key = key;

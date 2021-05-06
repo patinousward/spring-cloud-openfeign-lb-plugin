@@ -15,6 +15,12 @@ public interface LBRule<T> {
 
     String getApplicationName();
 
+    /**
+     *
+     * @param instances 当前注册中心中的实例
+     * @param template 当此请求template，可以获取到请求参数
+     * @return 返回负载均衡算法的请求url
+     */
     String rule(List<ServiceInstance> instances, RequestTemplate template);
 
     Class<T> getType();
